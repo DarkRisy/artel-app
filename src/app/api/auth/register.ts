@@ -3,7 +3,7 @@ import * as bcrypt from 'bcryptjs';
 import { SignupFormSchema, FormState } from '@/app/api/lib/definitions'
 import { createSession } from "@/app/api/lib/session";
 import { redirect } from "next/navigation";
-import { Role, User, UserCart } from "../db";
+import { Order, Role, User, UserCart } from "../db";
 
 export async function signup (state: FormState, formData: FormData, ) {
 
@@ -28,6 +28,9 @@ export async function signup (state: FormState, formData: FormData, ) {
       const data = await User.findOne({ where: { Email:email }})
       const role = await Role.findOne({ where:  { id:data.roleId }})
       await UserCart.create({
+        id: data.id
+      })
+      await Order.create({
         id: data.id
       })
       await User.update(

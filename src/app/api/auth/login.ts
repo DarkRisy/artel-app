@@ -34,7 +34,13 @@ export async function login(state: FormState, formData: FormData) {
             // state?.errors?.password?: ;
         }
     });
-    redirect('/user')
+    if( role.name == "Администратор"){
+        redirect('/admin')
+    }
+    else{
+        redirect('/user')
+    }
+    
 
 }
 

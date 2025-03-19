@@ -42,9 +42,16 @@ export default function Cart() {
       description: "Товар успешно удален из корзины",
     });
   };
+  const addToOrderItem = (id: number) => {
+    setCartItems(cartItems.filter((item: any) => item.id != id));
+    toast({
+      title: "Заказ оформлен",
+      description: "Вы успешно оформили заказ!",
+    });
+  };
   const checkout = (item: any) => {
     CreateOrder(item)
-    removeItem(item.id)
+    addToOrderItem(item.id)
   };
 
   return (

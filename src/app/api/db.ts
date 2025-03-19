@@ -114,7 +114,7 @@ export const UserProduct = sequelize.define(
 export const Order = sequelize.define('Order', {
   id: {
     type: DataTypes.INTEGER,
-    autoIncrement: true,
+    // autoIncrement: true,
     primaryKey: true,
   },
 
