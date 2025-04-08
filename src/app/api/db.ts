@@ -77,7 +77,7 @@ export const UserCart = sequelize.define('Cart', {
   },
 
 },
-{ timestamps: false })
+  { timestamps: false })
 
 
 export const UserProduct = sequelize.define(
@@ -119,7 +119,7 @@ export const Order = sequelize.define('Order', {
   },
 
 },
-{ timestamps: false })
+  { timestamps: false })
 
 UserCart.hasOne(User)
 User.belongsTo(UserCart)
@@ -128,5 +128,18 @@ UserProduct.belongsTo(UserCart);
 Order.hasMany(UserProduct);
 UserProduct.belongsTo(Order);
 
+Role.sync({ alter: true })
+const role = await Role.findOne({ where: { name: "Пользователь" } })
+console.log("ИМЯ РОЛИ: ",role.name)
+if (role.name != "Пользователь") {
+  await Role.create({
+    id: 1,
+    name: "Пользователь"
+  })
+  await Role.create({
+    id: 2,
+    name: "Администратор"
+  })
+}
 
 sequelize.sync({ alter: true })

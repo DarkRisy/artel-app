@@ -1,3 +1,4 @@
+import 'server-only'
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -23,8 +24,7 @@ export async function decrypt(session: string | undefined = '') {
     })
     return payload
   } catch (error) {
-    console.log('Failed to verify session')
-    console.log(session)
+    console.log('Ошибка верификации сессии пользователя!')
   }
 }
 export async function createSession(userId: string, role: any) {
@@ -35,7 +35,7 @@ export async function createSession(userId: string, role: any) {
     httpOnly: true,
     secure: true,
     expires: expiresAt,
-    sameSite: 'lax',
+    sameSite: 'strict',
     path: '/',
   })
 }

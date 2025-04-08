@@ -1,4 +1,4 @@
-
+'use server'
 import { decrypt } from '@/app/api/lib/session'
 import { cookies } from 'next/dist/server/request/cookies'
 import { NextRequest, NextResponse } from 'next/server'

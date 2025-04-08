@@ -10,14 +10,14 @@ export function Header() {
                     <Link href="/">Главная</Link>
                     <Link href="/products">Продукция</Link>
                     <Link href="/about">О нас</Link>
-                    <a href="/cart"><Image
+                    <Link href="/cart"><Image
                         src='./images/cart.svg'
                         width={59}
                         height={43}
                         alt="" />
-                    </a>
+                    </Link>
                 </nav>
-                <a href="/register"><Image src={'./images/user.svg'} width={50} height={45} alt="" /></a>
+                <Link href="/register"><Image src={'./images/user.svg'} width={50} height={45} alt="" /></Link>
 
             </div>
 
