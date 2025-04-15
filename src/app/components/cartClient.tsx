@@ -57,6 +57,7 @@ const Cart: React.FC = () => {
                 <img src={item.Image} alt={item.Name} className="w-20 h-20 object-cover rounded" />
                 <div suppressHydrationWarning>
                   <h3 className="font-bold">{item.Name}</h3>
+                  <h5 className="font-light">{item.Description}</h5>
                   <p suppressHydrationWarning className="text-gray-600">{item.Price} ₽</p>
                 </div>
               </div>

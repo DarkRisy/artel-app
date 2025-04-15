@@ -80,38 +80,37 @@ export const UserCart = sequelize.define('Cart', {
   { timestamps: false })
 
 
-export const UserProduct = sequelize.define(
+  export const UserProduct = sequelize.define(
   'Product',
-  {
-    id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true,
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      Name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      Description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      Image: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
     },
-    Name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Description: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    Price: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    Image: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-  },
-  {
-    timestamps: false
-  }
-)
-
-export const Order = sequelize.define('Order', {
+    {
+      timestamps: false
+    }
+  )
+  export const Order = sequelize.define('Order', {
   id: {
     type: DataTypes.INTEGER,
     // autoIncrement: true,
@@ -120,6 +119,50 @@ export const Order = sequelize.define('Order', {
 
 },
   { timestamps: false })
+  export const ConstructionStage = sequelize.define(
+  'ConstructionStage',
+    {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      Name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      Description: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Image_1: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Image_2: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      Image_3: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      OrderId: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: UserProduct,
+          key: 'id',
+        },
+        allowNull: true,
+      }
+    },
+    {
+      timestamps: false
+    }
+  )
+  
+
 
 UserCart.hasOne(User)
 User.belongsTo(UserCart)
@@ -127,6 +170,8 @@ UserCart.hasMany(UserProduct);
 UserProduct.belongsTo(UserCart);
 Order.hasMany(UserProduct);
 UserProduct.belongsTo(Order);
+UserProduct.hasMany(ConstructionStage);
+ConstructionStage.belongsTo(UserProduct);
 
 Role.sync({ alter: true })
 const role = await Role.findOne({ where: { name: "Пользователь" } })

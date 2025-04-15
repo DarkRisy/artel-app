@@ -19,6 +19,12 @@ export async function signup (state: FormState, formData: FormData, ) {
     }
     const { name, email, password } = validatedFields.data
     const hashedPassword = await bcrypt.hash(password, 10)
+    const CheckEmail = await User.findOne({ where: { Email:email }})
+    if (CheckEmail){
+       return{
+        message: "Данный Email уже зарегистрирован!"
+       }
+    }
     await User.create({
         Name: name,
         Email: email,

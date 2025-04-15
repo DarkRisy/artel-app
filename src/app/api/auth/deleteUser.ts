@@ -4,5 +4,5 @@ import { redirect } from "next/navigation"
 
 export async function deleteAccount() {
     deleteSession()
-    redirect('/auth')
+    redirect('/register')
   }

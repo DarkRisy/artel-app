@@ -1,4 +1,10 @@
 
+
+
+  export async function getStage() {
+    const res = await fetch('http://localhost:3000/api/user/stage');
+    return res.json();
+  }
 export async function getData() {
     const res = await fetch('http://localhost:3000/api/user');
     return res.json();

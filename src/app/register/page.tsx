@@ -17,7 +17,7 @@ function Register() {
                     <input id='password' name='password' className="w-[274px] h-[40px] bg-[#2D3538] border-2 border-[#C34D3F] text-center placeholder:text-center" type="password" placeholder="Password"/>
                     {state?.errors?.password && (
                         <div>
-                            <p>Password must:</p>
+                            <p>Пароль должен соответствовать требованиям:</p>
                             <ul>
                                 {state.errors.password.map((error) => (
                                     <li key={error}>- {error}</li>
@@ -25,6 +25,7 @@ function Register() {
                             </ul>
                         </div>
                     )}
+                    {state?.message && <p>{state?.message}</p>}
                     <button disabled={pending} className="mt-[20px] w-[274px] h-[40px] bg-[#2D3538] border-2 border-[#C34D3F]" type="submit">Зарегестрироваться</button>
                     <Link href="/auth"><p>Уже есть аккаунт</p></Link>
                 </form>
