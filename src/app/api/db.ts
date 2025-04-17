@@ -3,10 +3,12 @@ import pg from "pg"
 
 
 const { DataTypes, Sequelize } = require('sequelize');
-const sequelize = new Sequelize('Artel', 'postgres', 'nowoodessa', {
-  host: 'localhost',
-  dialect: 'postgres',
-  dialectModule: pg,
+const sequelize = new Sequelize(
+  `postgresql://postgres:Nowoodessa21@@db.vnputjiagckeokakesam.supabase.co:5432/postgres`
+  // 'Artel', 'postgres', 'nowoodessa', {
+  // host: 'localhost',
+  // dialect: 'postgres',
+  // dialectModule: pg,
 })
 
 try {
