@@ -2,12 +2,10 @@
 import { Trash2 } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import { useEffect, useState } from "react";
-import { getData, deleteItem, createOrder, CartItem } from './cartServer'; // Импортируйте ваши API функции
-
+import { getData, deleteItem, createOrder, CartItem } from './cartServer';
 const Cart: React.FC = () => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const { toast } = useToast();
-
   useEffect(() => {
     const fetchData = async () => {
       const newData = await getData();
@@ -15,9 +13,7 @@ const Cart: React.FC = () => {
     };
     fetchData();
   }, []);
-
   const total = cartItems.reduce((sum, item) => sum + item.Price * 1, 0);
-
   const removeItem = (id: number) => {
     setCartItems(cartItems.filter(item => item.id !== id));
     toast({
@@ -25,7 +21,6 @@ const Cart: React.FC = () => {
       description: "Товар успешно удален из корзины",
     });
   };
-
   const addToOrderItem = (id: number) => {
     setCartItems(cartItems.filter(item => item.id !== id));
     toast({
@@ -33,17 +28,14 @@ const Cart: React.FC = () => {
       description: "Вы успешно оформили заказ!",
     });
   };
-
   const checkout = async (item: CartItem) => {
     await createOrder(item);
     addToOrderItem(item.id);
   };
-
   const handleDelete = async (item: CartItem) => {
     await deleteItem(item);
     removeItem(item.id);
   };
-
   return (
     <div className="container mx-auto py-8 pt-[150]">
       <h2 className="text-3xl font-bold mb-8">Корзина</h2>
@@ -54,7 +46,7 @@ const Cart: React.FC = () => {
           {cartItems.map((item) => (
             <div key={item.id} className="flex items-center justify-between border rounded-lg p-4 shadow-sm">
               <div className="flex items-center space-x-4">
-                <img src={item.Image} alt={item.Name} className="w-20 h-20 object-cover rounded" />
+                <img src={`/images/${item.Image}`} alt={item.Name} className="w-20 h-20 object-cover rounded" />
                 <div suppressHydrationWarning>
                   <h3 className="font-bold">{item.Name}</h3>
                   <h5 className="font-light">{item.Description}</h5>
