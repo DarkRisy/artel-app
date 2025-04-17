@@ -83,7 +83,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error("Error during file update:", error);
     return NextResponse.json(
-      { message: 'Internal server error', error: error.message },
+      { message: 'Internal server error' },
       { status: 500 }
     );
   }
