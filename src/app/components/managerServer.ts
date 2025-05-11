@@ -1,5 +1,4 @@
 'use server'
-import axios from 'axios';
 import { sendStageUpdateEmail, sendStatusUpdateEmail } from '../api/utils/emailSender';
 import { ConstructionStage, Order, OrderStatus } from './manager/types';
 
@@ -113,7 +112,7 @@ const transformOrderData = (order: any): Order => ({
 // Получение всех заказов с пользователями и стадиями
 export const getOrdersWithStages = async (): Promise<Order[]> => {
   try {
-    const response = await fetch(`http://sk-artel.ru:80/api/orders`);
+    const response = await fetch(`http://sk-artel.ru/api/orders`);
     const data = await response.json();
     console.log(transformOrderData)
     return data.map(transformOrderData);
@@ -142,7 +141,7 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
         const formData = new FormData();
         formData.append('files', file);
 
-        const uploadResponse = await fetch(`http://sk-artel.ru:80/api/uploadPhotoStage`, {
+        const uploadResponse = await fetch(`http://sk-artel.ru/api/uploadPhotoStage`, {
           method: 'POST',
           body: formData
         });
@@ -165,7 +164,7 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
     };
 
     // 3. Создаем этап
-    const response = await fetch(`http://sk-artel.ru:80/api/stages`, {
+    const response = await fetch(`http://sk-artel.ru/api/stages`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -198,7 +197,7 @@ export const updateOrderStatus = async (
 ): Promise<Order> => {
   try {
     const response = await fetch(
-      `http://sk-artel.ru:80/api/orders/${orderId}/status`,
+      `http://sk-artel.ru/api/orders/${orderId}/status`,
       {
         method: 'PATCH',
         headers: {

@@ -36,7 +36,7 @@ export default function AdminDashboard() {
   const fetchUsers = async () => {
     setLoading(true)
     try {
-      const res = await fetch(`http://sk-artel.ru:80/api/admin`)
+      const res = await fetch(`http://sk-artel.ru/api/admin`)
       const json = await res.json()
       setUsers(json.data)
     } catch {
@@ -48,7 +48,7 @@ export default function AdminDashboard() {
 
   const updateRole = async (userId: string, newRole: number) => {
     try {
-      const res = await fetch(`http://sk-artel.ru:80/api/admin/updateRole`, {
+      const res = await fetch(`http://sk-artel.ru/api/admin/updateRole`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, role: newRole }),
@@ -66,7 +66,7 @@ export default function AdminDashboard() {
   const handleDeleteUser = async () => {
     if (!deletingUser) return
     try {
-      const res = await fetch(`http://sk-artel.ru:80/api/admin/deleteUser`, {
+      const res = await fetch(`http://sk-artel.ru/api/admin/deleteUser`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(deletingUser),
