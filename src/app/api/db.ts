@@ -410,42 +410,6 @@ ConstructionStage.belongsTo(Order);
 User.hasMany(Order);
 Order.belongsTo(User);
 
-const [admin, adminCreated] = await User.findOrCreate({
-  where: { Email: 'admin@gmail.com' },
-  defaults: {
-    Name: 'Администратор Системы',
-    Email: 'admin@gmail.com',
-    emailVerified: true,
-    Phone: '+79991234567',
-    Password: hashedPassword,
-    roleId: 2
-  }
-});
-
-if (adminCreated) {
-  console.log('Администратор создан');
-} else {
-  console.log('Администратор уже существует');
-}
-
-// Создаём менеджера (роль 3), если его нет
-const [manager, managerCreated] = await User.findOrCreate({
-  where: { Email: 'manager@gmail.com' },
-  defaults: {
-    Name: 'Менеджер Проектов',
-    Email: 'manager@gmail.com',
-    emailVerified: true,
-    Phone: '+79997654321',
-    Password: hashedPassword,
-    roleId: 3
-  }
-});
-
-if (managerCreated) {
-  console.log('Менеджер создан');
-} else {
-  console.log('Менеджер уже существует');
-}
 
 Role.sync({ alter: true })
 async function initializeRoles() {
@@ -486,3 +450,39 @@ seedProducts()
   // .then(() => process.exit(0))
   // .catch(() => process.exit(1));
 sequelize.sync({ alter: true })
+const [admin, adminCreated] = await User.findOrCreate({
+  where: { Email: 'admin@gmail.com' },
+  defaults: {
+    Name: 'Администратор Системы',
+    Email: 'admin@gmail.com',
+    emailVerified: true,
+    Phone: '+79991234567',
+    Password: hashedPassword,
+    roleId: 2
+  }
+});
+
+if (adminCreated) {
+  console.log('Администратор создан');
+} else {
+  console.log('Администратор уже существует');
+}
+
+// Создаём менеджера (роль 3), если его нет
+const [manager, managerCreated] = await User.findOrCreate({
+  where: { Email: 'manager@gmail.com' },
+  defaults: {
+    Name: 'Менеджер Проектов',
+    Email: 'manager@gmail.com',
+    emailVerified: true,
+    Phone: '+79997654321',
+    Password: hashedPassword,
+    roleId: 3
+  }
+});
+
+if (managerCreated) {
+  console.log('Менеджер создан');
+} else {
+  console.log('Менеджер уже существует');
+}
