@@ -1,13 +1,16 @@
-import 'server-only'
+'use server'
+// import 'server-only'
+
 import { SignJWT, jwtVerify } from 'jose'
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
-const secretKey = 'EXoz6MnO0kuGFuyE6pfUgjE/LruOJvUujuHuXw0p77U='
-const encodedKey = new TextEncoder().encode(secretKey)
+
+const encodedKey = new TextEncoder().encode(process.env.SECRET_KEY)
 const response = NextResponse.next();
 export type SessionPayload = {
   userId: any,
   expiresAt: Date,
+  emailVerified: boolean,
   role: any,
 }
 export async function encrypt(payload: SessionPayload) {
@@ -27,9 +30,9 @@ export async function decrypt(session: string | undefined = '') {
     console.log('Ошибка верификации сессии пользователя!')
   }
 }
-export async function createSession(userId: string, role: any) {
+export async function createSession(userId: string, role: any, emailVerified: boolean) {
   const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
-  const session = await encrypt({ userId, expiresAt, role })
+  const session = await encrypt({ userId, expiresAt, emailVerified, role })
   const cookieStore = await cookies()
   cookieStore.set('session', session, {
     httpOnly: true,
@@ -39,6 +42,12 @@ export async function createSession(userId: string, role: any) {
     path: '/',
   })
 }
+export async function deleteSession() {
+  const cookieStore = await cookies()
+  cookieStore.delete('session')
+  return response
+}
+
 export async function updateSession() {
   const session = (await cookies()).get('session')?.value
   const payload = await decrypt(session)
@@ -56,9 +65,3 @@ export async function updateSession() {
   })
   return response
 }
-export async function deleteSession() {
-  const cookieStore = await cookies()
-  cookieStore.delete('session')
-  return response
-}
-

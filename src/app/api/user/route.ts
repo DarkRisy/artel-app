@@ -7,14 +7,31 @@ import { UpdateUserData } from "./user"
 import { cookies } from "next/dist/server/request/cookies"
 
 
-
 export async function GET() {
-    const cookie = (await cookies()).get('session')?.value
-    const session = await decrypt(cookie)
-    const ID = session?.userId
-    const user = await User.findOne({ where: { id: ID }, raw: true })
-    const data = user
-    return NextResponse.json({ data })
+    try {
+        const cookie = (await cookies()).get('session')?.value;
+        
+        if (!cookie) {
+            return NextResponse.json({ error: 'No session cookie found' }, { status: 401 });
+        }
+
+        const session = await decrypt(cookie);
+        
+        if (!session?.userId) {
+            return NextResponse.json({ error: 'Invalid or expired session' }, { status: 401 });
+        }
+
+        const user = await User.findOne({ where: { id: session.userId }, raw: true });
+        
+        if (!user) {
+            return NextResponse.json({ error: 'User not found' }, { status: 404 });
+        }
+
+        return NextResponse.json({ data: user });
+    } catch (error) {
+        console.error('Error in GET handler:', error);
+        return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    }
 }
 
 

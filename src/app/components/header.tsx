@@ -30,9 +30,9 @@ export function Header() {
                     <Link href="/" className="hover:text-gray-400 transition duration-200">Главная</Link>
                     <Link href="/products" className="hover:text-gray-400 transition duration-200">Продукция</Link>
                     <Link href="/about" className="hover:text-gray-400 transition duration-200">О нас</Link>
-                    <Link href="/cart">
+                    {/* <Link href="/cart">
                         <Image src='./images/cart.svg' width={59} height={43} alt="Корзина" className="hover:scale-110 transition-transform duration-200" />
-                    </Link>
+                    </Link> */}
                     <Link href="/register">
                         <Image src='./images/user.svg' width={50} height={45} alt="Аккаунт" className="hover:scale-110 transition-transform duration-200" />
                     </Link>
@@ -43,9 +43,9 @@ export function Header() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
                         </svg>
                     </button>
-                    <Link href="/cart" aria-label="Корзина">
+                    {/* <Link href="/cart" aria-label="Корзина">
                         <Image src='./images/cart.svg' width={35} height={35} alt="Корзина" className="hover:scale-110 transition-transform duration-200" />
-                    </Link>
+                    </Link> */}
                     <Link href="/register" aria-label="Аккаунт">
                         <Image src='./images/user.svg' width={35} height={35} alt="Аккаунт" className="hover:scale-110 transition-transform duration-200" />
                     </Link>

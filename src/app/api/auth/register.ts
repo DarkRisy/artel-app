@@ -3,9 +3,11 @@ import * as bcrypt from 'bcryptjs';
 import { SignupFormSchema, FormState } from '@/app/api/lib/definitions'
 import { createSession } from "@/app/api/lib/session";
 import { redirect } from "next/navigation";
-import { Order, Role, User, UserCart } from "../db";
+import { Order, Role, User } from "../db";
+import { generateVerificationToken } from '../utils/tokenGenerator';
+import { sendVerificationEmail } from '../utils/emailSender';
 
-export async function signup (state: FormState, formData: FormData, ) {
+export async function signup(state: FormState, formData: FormData,) {
 
     const validatedFields = SignupFormSchema.safeParse({
         name: formData.get('name'),
@@ -19,36 +21,25 @@ export async function signup (state: FormState, formData: FormData, ) {
     }
     const { name, email, password } = validatedFields.data
     const hashedPassword = await bcrypt.hash(password, 10)
-    const CheckEmail = await User.findOne({ where: { Email:email }})
-    if (CheckEmail){
-       return{
-        message: "Данный Email уже зарегистрирован!"
-       }
+    const CheckEmail = await User.findOne({ where: { Email: email } })
+    if (CheckEmail) {
+        return {
+            message: "Данный Email уже зарегистрирован!"
+        }
     }
+    const verificationToken = generateVerificationToken();
     await User.create({
         Name: name,
         Email: email,
+        emailVerificationToken: verificationToken,
+        emailVerified: false,
         Password: hashedPassword,
         roleId: 1,
-      })
-      const data = await User.findOne({ where: { Email:email }})
-      const role = await Role.findOne({ where:  { id:data.roleId }})
-      await UserCart.create({
-        id: data.id
-      })
-      await Order.create({
-        id: data.id
-      })
-      await User.update(
-        {
-          CartId: data.id,
-        },
-        {
-          where: {
-            id: data.id,
-          },
-        }
-      )
-      await createSession(data.id, role.name)
-      redirect('/user')
+    })
+    await sendVerificationEmail(email, verificationToken);
+    const data = await User.findOne({ where: { Email: email } })
+    const role = await Role.findOne({ where: { id: data.roleId } })
+
+    await createSession(data.id, role.name, data.emailVerified)
+    redirect('/user')
 }

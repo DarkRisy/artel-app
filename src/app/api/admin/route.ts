@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { User } from "../db";
-import { revalidatePath } from "next/cache";
-import { AddToAdmin } from "./AddRight/AddRight";
+
 
 
 export async function GET() {

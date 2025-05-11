@@ -1,28 +1,35 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "noEmit": true,
-    "noImplicitAny": false,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
+    "target": "ES2017", // Целевая версия JavaScript. Версия 2017 поддерживает async/await и другие функции.
+    "lib": ["dom", "dom.iterable", "esnext"], // Указывает библиотеки, включаемые во время компиляции, чтобы TypeScript знал о типах объектов в этих библиотеках.
+    "allowJs": true, // Разрешает компиляцию JavaScript файлов.
+    "skipLibCheck": true, // Пропускает проверку типов для деклараций библиотек. Может ускорить процесс компиляции.
+    "strict": true, // Включает все строгие проверки типов.
+    "noEmit": true, // Отключает вывод файлов. Полезно в проектах, где вы не хотите создавать файлы JavaScript.
+    "noImplicitAny": false, // Не выдает ошибки для переменных без явного определения типа (по умолчанию true в режиме strict).
+    "esModuleInterop": true, // Упрощает импорт CommonJS модулей в ES6.
+    "module": "esnext", // Указывает формат модулей ES.
+    "moduleResolution": "bundler", // Способ разрешения модулей, который следует правилам упаковки.
+    "resolveJsonModule": true, // Разрешает импорт JSON файлов как модулей.
+    "isolatedModules": true, // Гарантирует, что каждый файл является модулем.
+    "jsx": "preserve", // Сохраняет JSX в выходных файлах, не компилируя их.
+    "incremental": true, // Включает инкрементальную компиляцию для ускорения компиляции в последующих запусках.
     "plugins": [
       {
-        "name": "next"
+        "name": "next" // Использует плагины для интеграции с Next.js.
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"] // Позволяет использовать алиасы для путей к файлам, чтобы делать импорты короче и более читабельными.
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts", // Включает файл, автоматически генерируемый Next.js.
+    "**/*.ts", // Включает все TypeScript файлы.
+    "**/*.tsx", // Включает все файлы TypeScript с JSX.
+    ".next/types/**/*.ts", // Включает типы Next.js.
+  ],
+  "exclude": [
+    "node_modules" // Исключает папку с зависимостями.
+  ]
 }

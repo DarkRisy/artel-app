@@ -1,41 +1,78 @@
-'use server'
+// 'use server'
 import { decrypt } from '@/app/api/lib/session'
-import { cookies } from 'next/dist/server/request/cookies'
+import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
- 
-const protectedRoutes = ['/user']
-const publicRoutes = ['/auth', '/register']
- 
+// Конфигурация маршрутов
+const PUBLIC_ROUTES = ['/', '/auth', '/register', '/about']
+const PROTECTED_ROUTES = ['/admin', '/manager', '/user']
+const ROLE_BASE_ROUTES: Record<string, string> = {
+  admin: '/admin',
+  manager: '/manager',
+  user: '/user'
+}
+
+type UserRole = 'user' | 'admin' | 'manager'
+
 export default async function middleware(req: NextRequest) {
-  const path = req.nextUrl.pathname
-  console.log(path)
-  const isProtectedRoute = protectedRoutes.includes(path)
-  const isPublicRoute = publicRoutes.includes(path)
+  const { pathname } = req.nextUrl
+  const isPublicRoute = PUBLIC_ROUTES.some(route => 
+    pathname === route || pathname.startsWith(`${route}/`)
+  )
+  const isProtectedRoute = PROTECTED_ROUTES.some(route => 
+    pathname.startsWith(`${route}/`) || pathname === route
+  )
+
+  // Получаем сессию
   const cookie = (await cookies()).get('session')?.value
   const session = await decrypt(cookie)
-  if (isProtectedRoute && !session?.userId) {
-    return NextResponse.redirect(new URL('/auth', req.nextUrl))
+
+  // Обработка неавторизованных пользователей
+  if (!session?.userId) {
+    if (isPublicRoute) {
+      return NextResponse.next()
+    }
+
+    if (isProtectedRoute) {
+      const loginUrl = new URL('/auth', req.url)
+      loginUrl.searchParams.set('callbackUrl', pathname)
+      return NextResponse.redirect(loginUrl)
+    }
+
+    return NextResponse.next()
   }
-  if (
-    isPublicRoute &&
-    session?.userId &&
-    session?.role == "Пользователь" &&
-    !req.nextUrl.pathname.startsWith('/user')
-  ) {
-    return NextResponse.redirect(new URL('/user', req.nextUrl))
+
+  // Нормализация роли пользователя
+  const normalizeRole = (role: unknown): UserRole => {
+    if (typeof role !== 'string') return 'user'
+    const roleLower = role.toLowerCase()
+    if (roleLower === 'admin' || roleLower === 'администратор') return 'admin'
+    if (roleLower === 'manager' || roleLower === 'менеджер') return 'manager'
+    return 'user'
   }
-  if (
-    isPublicRoute &&
-    session?.userId &&
-    session?.role == "Администратор" &&
-    !req.nextUrl.pathname.startsWith('/user')
-  ) {
-    return NextResponse.redirect(new URL('/admin', req.nextUrl))
+
+  const userRole = normalizeRole(session.role)
+  const userBaseRoute = ROLE_BASE_ROUTES[userRole] || '/user'
+
+  // Перенаправление авторизованных пользователей с auth/register
+  if (pathname.startsWith('/auth') || pathname.startsWith('/register')) {
+    return NextResponse.redirect(new URL(userBaseRoute, req.url))
   }
+
+  // Проверка доступа к ролевым маршрутам
+  if (isProtectedRoute) {
+    const isAllowedRoute = pathname.startsWith(userBaseRoute)
+    
+    if (!isAllowedRoute) {
+      return NextResponse.redirect(new URL(userBaseRoute, req.url))
+    }
+  }
+
   return NextResponse.next()
 }
- 
+
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|.*\\.png$).*)'],
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|css|js)$).*)'
+  ]
 }
