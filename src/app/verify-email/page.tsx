@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-
-export default function VerifyEmailPage() {
+function VerifyEmailContent() {
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
 
@@ -19,9 +18,17 @@ export default function VerifyEmailPage() {
   return (
     <div className="text-center p-8">
       <h1 className="text-xl font-semibold mb-4">
-        {token ? 'Verifying your email...' : 'Token is missing'}
+        {token ? 'Проверяем ваш email...' : 'Токен не найден'}
       </h1>
-      <p>Please wait while we process your request.</p>
+      <p>Пожалуйста, подождите, пока мы обрабатываем ваш запрос.</p>
     </div>
+  );
+}
+
+export default function VerifyEmailPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }
