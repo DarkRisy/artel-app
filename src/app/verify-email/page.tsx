@@ -8,7 +8,7 @@ function VerifyEmailContent() {
 
   useEffect(() => {
     if (token) {
-      fetch(`/api/auth/verify-email?token=${token}`)
+      fetch(`http://sk-artel.ru/api/auth/verify-email?token=${token}`)
         .then(res => res.json())
         .then(data => console.log(data))
         .catch(err => console.error(err));
