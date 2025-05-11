@@ -19,7 +19,7 @@ function VerifyEmailContent() {
   }, [token]);
 
   return (
-    <div className="text-center p-8">
+    <div className="text-center mt-[120px] p-8">
       <h1 className="text-xl font-semibold mb-4">
         {token ? 'Проверяем ваш email...' : 'Токен не найден'}
       </h1>
