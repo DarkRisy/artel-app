@@ -677,13 +677,13 @@ export default function AccountPage() {
     }
   }, [toast])
 
-  const resendVerificationEmail = useCallback(async () => {
-    try {
-      // await resendVerification()
-    } catch (error) {
-      throw error
-    }
-  }, [])
+  // const resendVerificationEmail = useCallback(async () => {
+  //   try {
+  //     // await resendVerification()
+  //   } catch (error) {
+  //     throw error
+  //   }
+  // }, [])
 
   useEffect(() => {
     loadAccountData()
@@ -766,11 +766,11 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen mt-[120px] bg-[#2D3538] pb-12">
-      <EmailVerificationModal
+      {/* <EmailVerificationModal
         isOpen={showVerificationModal && !userData?.emailVerified}
         onClose={() => setShowVerificationModal(false)}
-        onResendVerification={resendVerificationEmail}
-      />
+        onResendVerification={}
+      /> */}
 
       <div className="container mx-auto px-4 pt-8">
         <div className="max-w-6xl mx-auto space-y-8">
