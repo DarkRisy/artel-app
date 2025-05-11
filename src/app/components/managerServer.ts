@@ -113,7 +113,7 @@ const transformOrderData = (order: any): Order => ({
 // Получение всех заказов с пользователями и стадиями
 export const getOrdersWithStages = async (): Promise<Order[]> => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/api/orders`);
+    const response = await axios.get(`http://92.242.60.192/api/orders`);
     console.log(transformOrderData)
     return response.data.map(transformOrderData);
   } catch (error) {
@@ -141,7 +141,7 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
         const formData = new FormData();
         formData.append('files', file);
 
-        const uploadResponse = await axios.post(`${API_BASE_URL}/api/uploadPhotoStage`, formData, {
+        const uploadResponse = await axios.post(`http://92.242.60.192/api/uploadPhotoStage`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -164,7 +164,7 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
     };
 
     // 3. Создаем этап
-    const response = await axios.post(`${API_BASE_URL}/api/stages`, stagePayload);
+    const response = await axios.post(`http://92.242.60.192/api/stages`, stagePayload);
     sendStageUpdateEmail(stageData.OrderId, stageData.Name)
     return {
       id: response.data.id,
@@ -190,7 +190,7 @@ export const updateOrderStatus = async (
 ): Promise<Order> => {
   try {
     const response = await axios.patch(
-      `${API_BASE_URL}/api/orders/${orderId}/status`,
+      `http://92.242.60.192/api/orders/${orderId}/status`,
       { status: newStatus },
       {
         headers: {
