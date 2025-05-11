@@ -31,7 +31,7 @@ export async function UpdateUser(user) {
 }
 
 export async function DeleteUser(user) {
-    const res = await fetch(`http://92.242.60.192:80/api/admin/deleteUser`, {
+    const res = await fetch(`http://92.242.60.192:3000/api/admin/deleteUser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

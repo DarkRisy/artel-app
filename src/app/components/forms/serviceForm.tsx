@@ -177,7 +177,7 @@ export default function ServiceForm({ product }: ServiceFormProps) {
       });
     }
 
-    const response = await fetch(`http://92.242.60.192:80/api/orders`, {
+    const response = await fetch(`http://92.242.60.192:3000/api/orders`, {
       method: 'POST',
       body: formDataToSend,
     });
