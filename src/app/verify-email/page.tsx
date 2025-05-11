@@ -1,22 +1,32 @@
 'use client';
 
 import { Suspense, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import router from 'next/router';
+import { useSearchParams, useRouter } from 'next/navigation';
+
 function VerifyEmailContent() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const token = searchParams.get('token');
 
   useEffect(() => {
     if (token) {
       fetch(`http://sk-artel.ru/api/auth/verify-email?token=${token}`)
-        .then(res => res.json())
-        .then(data => console.log(data))
-        .catch(err => console.error(err));
-        setTimeout(() => router.push('/user'), 1500);
+        .then(res => {
+          if (!res.ok) {
+            throw new Error('Ошибка сервера');
+          }
+          return res.json();
+        })
+        .then(data => {
+          console.log(data);
+          setTimeout(() => router.push('/user'), 1500);
+        })
+        .catch(err => {
+          console.error('Ошибка:', err);
+          // Можно добавить обработку ошибки для пользователя
+        });
     }
-    
-  }, [token]);
+  }, [token, router]);
 
   return (
     <div className="text-center mt-[120px] p-8">
@@ -30,7 +40,7 @@ function VerifyEmailContent() {
 
 export default function VerifyEmailPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<div className="text-center mt-[120px]">Загрузка...</div>}>
       <VerifyEmailContent />
     </Suspense>
   );

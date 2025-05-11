@@ -35,7 +35,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendVerificationEmail(email: string, token: string) {
-  const verificationUrl = `http://sk-artel.ru/verify-email?token=${token}`;
+  const verificationUrl = `http://sk-artel.ru/api/auth/verify-email?token=${token}`;
 
   await transporter.sendMail({
     from: 'Артель',
