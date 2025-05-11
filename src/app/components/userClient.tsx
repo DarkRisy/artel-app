@@ -679,7 +679,7 @@ export default function AccountPage() {
 
   const resendVerificationEmail = useCallback(async () => {
     try {
-      await resendVerification()
+      // await resendVerification()
     } catch (error) {
       throw error
     }

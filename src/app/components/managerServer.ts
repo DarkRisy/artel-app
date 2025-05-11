@@ -113,7 +113,7 @@ const transformOrderData = (order: any): Order => ({
 // Получение всех заказов с пользователями и стадиями
 export const getOrdersWithStages = async (): Promise<Order[]> => {
   try {
-    const response = await axios.get(`http://92.242.60.192:3000/api/orders`);
+    const response = await axios.get(`http://sk-artel.ru:80/api/orders`);
     console.log(transformOrderData)
     return response.data.map(transformOrderData);
   } catch (error) {
@@ -141,7 +141,7 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
         const formData = new FormData();
         formData.append('files', file);
 
-        const uploadResponse = await axios.post(`http://92.242.60.192:3000/api/uploadPhotoStage`, formData, {
+        const uploadResponse = await axios.post(`http://sk-artel.ru:80/api/uploadPhotoStage`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -164,8 +164,8 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
     };
 
     // 3. Создаем этап
-    const response = await axios.post(`http://92.242.60.192:3000/api/stages`, stagePayload);
-    sendStageUpdateEmail(stageData.OrderId, stageData.Name)
+    const response = await axios.post(`http://sk-artel.ru:80/api/stages`, stagePayload);
+    // sendStageUpdateEmail(stageData.OrderId, stageData.Name)
     return {
       id: response.data.id,
       Name: response.data.Name,
@@ -190,7 +190,7 @@ export const updateOrderStatus = async (
 ): Promise<Order> => {
   try {
     const response = await axios.patch(
-      `http://92.242.60.192:3000/api/orders/${orderId}/status`,
+      `http://sk-artel.ru:80/api/orders/${orderId}/status`,
       { status: newStatus },
       {
         headers: {
@@ -203,7 +203,7 @@ export const updateOrderStatus = async (
       throw new Error('Пустой ответ от сервера');
     }
     const updatedOrder = transformOrderData(response.data);
-    sendStatusUpdateEmail(orderId, newStatus)
+    // sendStatusUpdateEmail(orderId, newStatus)
     return updatedOrder;
   } catch (error) {
     console.error('Ошибка при обновлении статуса заказа:', error);

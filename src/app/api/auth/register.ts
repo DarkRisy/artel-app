@@ -36,7 +36,7 @@ export async function signup(state: FormState, formData: FormData,) {
         Password: hashedPassword,
         roleId: 1,
     })
-    await sendVerificationEmail(email, verificationToken);
+    // await sendVerificationEmail(email, verificationToken);
     const data = await User.findOne({ where: { Email: email } })
     const role = await Role.findOne({ where: { id: data.roleId } })
 

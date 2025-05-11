@@ -1,6 +1,14 @@
 'use server'
 import pg from "pg"
 import { seedProducts } from "./db_product";
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const password = '123asd123@';
+
+// Хешируем пароль один раз для обоих пользователей
+const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+// Создаём админа (роль 2), если его нет
 
 const { DataTypes, Sequelize } = require('sequelize');
 const sequelize = new Sequelize(
@@ -401,6 +409,43 @@ Order.hasMany(ConstructionStage);
 ConstructionStage.belongsTo(Order);
 User.hasMany(Order);
 Order.belongsTo(User);
+
+const [admin, adminCreated] = await User.findOrCreate({
+  where: { Email: 'admin@gmail.com' },
+  defaults: {
+    Name: 'Администратор Системы',
+    Email: 'admin@gmail.com',
+    emailVerified: true,
+    Phone: '+79991234567',
+    Password: hashedPassword,
+    roleId: 2
+  }
+});
+
+if (adminCreated) {
+  console.log('Администратор создан');
+} else {
+  console.log('Администратор уже существует');
+}
+
+// Создаём менеджера (роль 3), если его нет
+const [manager, managerCreated] = await User.findOrCreate({
+  where: { Email: 'manager@gmail.com' },
+  defaults: {
+    Name: 'Менеджер Проектов',
+    Email: 'manager@gmail.com',
+    emailVerified: true,
+    Phone: '+79997654321',
+    Password: hashedPassword,
+    roleId: 3
+  }
+});
+
+if (managerCreated) {
+  console.log('Менеджер создан');
+} else {
+  console.log('Менеджер уже существует');
+}
 
 Role.sync({ alter: true })
 async function initializeRoles() {
