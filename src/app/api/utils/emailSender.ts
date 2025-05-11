@@ -35,7 +35,7 @@ const transporter = nodemailer.createTransport({
 });
 
 export async function sendVerificationEmail(email: string, token: string) {
-  const verificationUrl = `http://sk-artel/api/auth/verify-email?token=${token}`;
+  const verificationUrl = `http://sk-artel/verify-email?token=${token}`;
 
   await transporter.sendMail({
     from: 'Артель',
@@ -68,7 +68,7 @@ export async function sendStageUpdateEmail(
           <h3 style="margin-top: 0; color: #C34D3F;">${stageName}</h3>
         </div>
         
-        <p>Вы можете проверить детали в <a href="http://92.242.60.192:3000/user" style="color: #C34D3F;">личном кабинете</a>.</p>
+        <p>Вы можете проверить детали в <a href="http://sk-artel/user" style="color: #C34D3F;">личном кабинете</a>.</p>
         <p>С уважением,<br>Команда Артель</p>
       </div>
     `
@@ -110,7 +110,7 @@ export async function sendStatusUpdateEmail(
           <p><strong>Новый статус:</strong> ${statusLabel}</p>
         </div>
         
-        <p>Вы можете проверить детали в <a href="http://92.242.60.192:3000/user" style="color: #C34D3F;">личном кабинете</a>.</p>
+        <p>Вы можете проверить детали в <a href="http://sk-artel/user" style="color: #C34D3F;">личном кабинете</a>.</p>
         <p>С уважением,<br>Команда Артель</p>
       </div>
     `
