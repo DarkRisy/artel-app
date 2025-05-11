@@ -18,7 +18,7 @@ export async function GET(request: Request) {
 
     if (result.success) {
       // Перенаправление на страницу успеха
-      return NextResponse.redirect(new URL('/email-verified', request.url))
+      return NextResponse.redirect(new URL('http://sk-artel.ru/email-verified', request.url))
     } else {
       return NextResponse.json(
         { error: result.message },

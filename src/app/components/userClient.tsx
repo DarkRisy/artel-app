@@ -726,11 +726,11 @@ export default function AccountPage() {
       window.location.href = '/'
     } catch (error) {
       console.error('Deletion failed:', error)
-      toast({
-        title: 'Ошибка удаления',
-        description: 'Не удалось удалить аккаунт',
-        variant: 'destructive',
-      })
+      // toast({
+      //   title: 'Ошибка удаления',
+      //   description: 'Не удалось удалить аккаунт',
+      //   variant: 'destructive',
+      // })
     }
   }, [userData?.id, toast])
 
