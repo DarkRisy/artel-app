@@ -29,16 +29,16 @@ export type OrderStatus = keyof typeof STATUS_CONFIG;
 const transporter = nodemailer.createTransport({
   service: 'gmail', // или другой сервис
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASSWORD
+    user: 'artelorenburg56@gmail.com',
+    pass: 'bbga xfue lgvo rjlo'
   }
 });
 
 export async function sendVerificationEmail(email: string, token: string) {
-  const verificationUrl = `${process.env.BASE_URL}/api/auth/verify-email?token=${token}`;
+  const verificationUrl = `http://92.242.60.192:3000/api/auth/verify-email?token=${token}`;
 
   await transporter.sendMail({
-    from: process.env.EMAIL_FROM,
+    from: 'Артель',
     to: email,
     subject: 'Подтвердите адрес электронной почты',
     html: `
@@ -55,7 +55,7 @@ export async function sendStageUpdateEmail(
 ) {
   const order = await Order.findOne({where: { id: orderId }})
   const mailOptions = {
-    from: process.env.EMAIL_FROM,
+    from: 'Артель',
     to: order.email,
     subject: `Обновление по вашему заказу #${orderId}`,
     html: `
@@ -68,8 +68,8 @@ export async function sendStageUpdateEmail(
           <h3 style="margin-top: 0; color: #C34D3F;">${stageName}</h3>
         </div>
         
-        <p>Вы можете проверить детали в <a href="${process.env.BASE_URL}/user" style="color: #C34D3F;">личном кабинете</a>.</p>
-        <p>С уважением,<br>Команда ${process.env.APP_NAME}</p>
+        <p>Вы можете проверить детали в <a href="http://92.242.60.192:3000/user" style="color: #C34D3F;">личном кабинете</a>.</p>
+        <p>С уважением,<br>Команда Артель</p>
       </div>
     `
   }
@@ -97,7 +97,7 @@ export async function sendStatusUpdateEmail(
   const statusLabel = STATUS_CONFIG[status]?.label || status;
   
   const mailOptions = {
-    from: process.env.EMAIL_FROM,
+    from: 'Артель',
     to: order.email,
     subject: `Обновление по вашему заказу #${orderId}`,
     html: `
@@ -110,8 +110,8 @@ export async function sendStatusUpdateEmail(
           <p><strong>Новый статус:</strong> ${statusLabel}</p>
         </div>
         
-        <p>Вы можете проверить детали в <a href="${process.env.BASE_URL}/user" style="color: #C34D3F;">личном кабинете</a>.</p>
-        <p>С уважением,<br>Команда ${process.env.APP_NAME}</p>
+        <p>Вы можете проверить детали в <a href="http://92.242.60.192:3000/user" style="color: #C34D3F;">личном кабинете</a>.</p>
+        <p>С уважением,<br>Команда Артель</p>
       </div>
     `
   };
