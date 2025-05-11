@@ -172,7 +172,7 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
       body: JSON.stringify(stagePayload)
     });
     const responseData = await response.json();
-    // sendStageUpdateEmail(stageData.OrderId, stageData.Name)
+    sendStageUpdateEmail(stageData.OrderId, stageData.Name)
     return {
       id: responseData.id,
       Name: responseData.Name,
@@ -212,7 +212,7 @@ export const updateOrderStatus = async (
       throw new Error('Пустой ответ от сервера');
     }
     const updatedOrder = transformOrderData(data);
-    // sendStatusUpdateEmail(orderId, newStatus)
+    sendStatusUpdateEmail(orderId, newStatus)
     return updatedOrder;
   } catch (error) {
     console.error('Ошибка при обновлении статуса заказа:', error);
