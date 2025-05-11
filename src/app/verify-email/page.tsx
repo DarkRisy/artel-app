@@ -13,8 +13,9 @@ function VerifyEmailContent() {
         .then(res => res.json())
         .then(data => console.log(data))
         .catch(err => console.error(err));
+        setTimeout(() => router.push('/user'), 1500);
     }
-    setTimeout(() => router.push('/user'), 1500);
+    
   }, [token]);
 
   return (
