@@ -2,12 +2,12 @@ const API_BASE_URL = process.env.BASE_URL;
 
 
 export async function getStage() {
-    const res = await fetch(`http://92.242.60.192:80/api/user/stage`);
+    const res = await fetch(`http://sk-artel.ru/api/user/stage`);
     return res.json();
   }
 
 export async function getData() {
-  const res = await fetch(`http://92.242.60.192:80/api/user`);
+  const res = await fetch(`http://sk-artel.ru/api/user`);
   if (!res.ok) {
     throw new Error('Failed to fetch user data');
   }
@@ -15,12 +15,12 @@ export async function getData() {
 }
 
 export async function getOrder() {
-    const res = await fetch(`http://92.242.60.192:80/api/user/orders`);
+    const res = await fetch(`http://sk-artel.ru/api/user/orders`);
     return res.json();
 }
 
 export async function UpdateUser(user) {
-    const res = await fetch(`http://92.242.60.192:80/api/user`, {
+    const res = await fetch(`http://sk-artel.ru/api/user`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
