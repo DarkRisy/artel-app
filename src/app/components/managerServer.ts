@@ -113,9 +113,10 @@ const transformOrderData = (order: any): Order => ({
 // Получение всех заказов с пользователями и стадиями
 export const getOrdersWithStages = async (): Promise<Order[]> => {
   try {
-    const response = await axios.get(`http://sk-artel.ru:80/api/orders`);
+    const response = await fetch(`http://sk-artel.ru:80/api/orders`);
+    const data = await response.json();
     console.log(transformOrderData)
-    return response.data.map(transformOrderData);
+    return data.map(transformOrderData);
   } catch (error) {
     console.error('Error fetching orders:', error);
     throw error;
@@ -141,14 +142,14 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
         const formData = new FormData();
         formData.append('files', file);
 
-        const uploadResponse = await axios.post(`http://sk-artel.ru:80/api/uploadPhotoStage`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
+        const uploadResponse = await fetch(`http://sk-artel.ru:80/api/uploadPhotoStage`, {
+          method: 'POST',
+          body: formData
         });
 
-        if (uploadResponse.data.url) {
-          imageUrls.push(uploadResponse.data.url);
+        const uploadData = await uploadResponse.json();
+        if (uploadData.url) {
+          imageUrls.push(uploadData.url);
         }
       }
     }
@@ -164,17 +165,24 @@ export const addStageWithImages = async (stageData: NewStageData): Promise<Const
     };
 
     // 3. Создаем этап
-    const response = await axios.post(`http://sk-artel.ru:80/api/stages`, stagePayload);
+    const response = await fetch(`http://sk-artel.ru:80/api/stages`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(stagePayload)
+    });
+    const responseData = await response.json();
     // sendStageUpdateEmail(stageData.OrderId, stageData.Name)
     return {
-      id: response.data.id,
-      Name: response.data.Name,
-      Description: response.data.Description,
-      Image_1: response.data.Image_1,
-      Image_2: response.data.Image_2,
-      Image_3: response.data.Image_3,
-      OrderId: response.data.OrderId,
-      createdAt: response.data.createdAt
+      id: responseData.id,
+      Name: responseData.Name,
+      Description: responseData.Description,
+      Image_1: responseData.Image_1,
+      Image_2: responseData.Image_2,
+      Image_3: responseData.Image_3,
+      OrderId: responseData.OrderId,
+      createdAt: responseData.createdAt
     };
 
   } catch (error) {
@@ -189,20 +197,22 @@ export const updateOrderStatus = async (
   newStatus: OrderStatus
 ): Promise<Order> => {
   try {
-    const response = await axios.patch(
+    const response = await fetch(
       `http://sk-artel.ru:80/api/orders/${orderId}/status`,
-      { status: newStatus },
       {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ status: newStatus })
       }
     );
 
-    if (!response.data) {
+    const data = await response.json();
+    if (!data) {
       throw new Error('Пустой ответ от сервера');
     }
-    const updatedOrder = transformOrderData(response.data);
+    const updatedOrder = transformOrderData(data);
     // sendStatusUpdateEmail(orderId, newStatus)
     return updatedOrder;
   } catch (error) {
