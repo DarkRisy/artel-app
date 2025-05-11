@@ -28,8 +28,8 @@ export type OrderStatus = keyof typeof STATUS_CONFIG;
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
-  port: 465, // Или 587 для TLS
-  secure: true, // true для 465, false для других портов
+  port: 587, // Или 587 для TLS
+  secure: false, // true для 465, false для других портов
   auth: {
     user: 'artelorenburg56@gmail.com',
     pass: 'bbga xfue lgvo rjlo'
