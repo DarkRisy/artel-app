@@ -1,4 +1,5 @@
-pgsql:
+services:
+  pgsql:
     image: postgres:17.2-alpine
     hostname: pgsql
     container_name: pgsql
@@ -19,3 +20,4 @@ pgsql:
 
 volumes:
   pgsql:
+    name: artel-pgsql
