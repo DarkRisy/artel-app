@@ -36,7 +36,7 @@ export async function createSession(userId: string, role: any, emailVerified: bo
   const cookieStore = await cookies()
   cookieStore.set('session', session, {
     httpOnly: true,
-    secure: true,
+    secure: false,
     expires: expiresAt,
     sameSite: 'strict',
     path: '/',
