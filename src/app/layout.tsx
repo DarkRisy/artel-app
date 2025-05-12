@@ -1,4 +1,3 @@
-'use client'
 import type { Metadata } from "next";
 import { Jura } from "next/font/google";
 import "./globals.css";
@@ -21,17 +20,13 @@ export default function RootLayout(
   { children, }: Readonly<{ children: React.ReactNode; }>
 ) {
   return (
-    <>
-      <html lang="en">
-
-        <body className={`${jura.variable} antialiased bg-[#2D3538]`}>
-          <Toaster />
-          <Sonner />
-          <Header></Header>
-          {children}
-        </body>
-      </html>
-    </>
-
+    <html lang="en">
+      <body className={`${jura.variable} antialiased bg-[#2D3538]`}>
+        <Toaster />
+        <Sonner />
+        <Header></Header>
+        {children}
+      </body>
+    </html>
   );
 }
