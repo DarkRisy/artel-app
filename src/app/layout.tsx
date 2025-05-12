@@ -20,6 +20,7 @@ export default function RootLayout({
     <html lang="ru">
       <head>
         <title>СК Артель</title>
+        <meta name="description" content="Профессиональные строительные решения" />
       </head>
       <body className={`${jura.variable} antialiased bg-[#2D3538] min-h-screen`}>
         <Toaster />
