@@ -1,3 +1,4 @@
+'use client'
 import React, { useCallback, useEffect, useState } from 'react'
 import { logout } from '../api/auth/logout'
 import { useToast } from '../hooks/use-toast'
