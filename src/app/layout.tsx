@@ -18,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
+      <head>
+        <title>СК Артель</title>
+      </head>
       <body className={`${jura.variable} antialiased bg-[#2D3538] min-h-screen`}>
         <Toaster />
         <Sonner />
