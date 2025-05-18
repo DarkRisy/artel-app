@@ -177,7 +177,7 @@ export default function ServiceForm({ product }: ServiceFormProps) {
       });
     }
 
-    const response = await fetch(`http://sk-artel.ru/api/orders`, {
+    const response = await fetch(`https://sk-artel.ru/api/orders`, {
       method: 'POST',
       body: formDataToSend,
     });

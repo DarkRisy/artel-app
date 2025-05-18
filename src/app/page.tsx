@@ -239,16 +239,10 @@ export default function Home() {
 
   return (
     <div className="">
-      {/* Hero Section */}
+
       <section className="relative h-screen">
         <div className="absolute inset-0">
-          <Image
-            src="/images/home_block.svg"
-            alt="Строительная компания Артель"
-            fill
-            className="object-cover"
-            priority
-          />
+          <Image src="/images/home_block.svg" alt="Строительная компания Артель" fill className="object-cover" priority/>
           <div className="absolute inset-0" />
         </div>
         <div className="relative h-full flex flex-col justify-center items-center text-center px-4 z-10">
@@ -261,7 +255,7 @@ export default function Home() {
         </div>
       </section>
       <div className="w-full h-2 bg-[#C34D3F]"></div>
-      {/* Activities Section */}
+
       <section className="py-16 ">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-white">
@@ -291,7 +285,6 @@ export default function Home() {
               >
                 <p>{CONFIG.contacts.address}</p>
               </ContactCard>
-
               <ContactCard 
                 icon={
                   <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
@@ -309,16 +302,11 @@ export default function Home() {
               </ContactCard>
 
               <ContactCard 
-                icon={
-                  <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" />
-                }
-                title="Часы работы"
-              >
+                icon={ <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" />} title="Часы работы">
                 <p>{CONFIG.contacts.hours}</p>
                 <p>Суббота - Воскресенье: выходной</p>
               </ContactCard>
             </div>
-
             <div className="lg:w-1/2 h-[448px] rounded-xl overflow-hidden shadow-lg relative">
               <div 
                 ref={mapRef} 
